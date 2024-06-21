@@ -38,7 +38,7 @@ jobs:
           fetch-depth: "0"
 
       - uses: actions/checkout@v4
-        name: Checout OOPetris main repo  
+        name: Checkout OOPetris main repo  
         with:
           fetch-depth: "0"
           repository: OpenBrickProtocolFoundation/oopetris
