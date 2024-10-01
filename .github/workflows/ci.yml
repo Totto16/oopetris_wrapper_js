@@ -125,7 +125,7 @@ jobs:
 
       - name: Build package
         run: |
-          npm install -D
+          npm clean-install -D
           npm run build --verbose
           npm run test
           npm pack
