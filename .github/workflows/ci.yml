@@ -104,7 +104,7 @@ jobs:
       - name: Configure
         run: |
           cd oopetris
-          meson setup build -Dbuildtype=release -Ddefault_library=static -Dclang_libcpp=${{ matrix.config.os == 'macos' && 'enabled' || 'disabled' }} -Donly_build_libs=true ${{ matrix.config.os == 'windows' && '-Db_vscrt=static_from_buildtype' || '' }}
+          meson setup build -Dbuildtype=release -Ddefault_library=shared -Dclang_libcpp=${{ matrix.config.os == 'macos' && 'enabled' || 'disabled' }} -Donly_build_libs=true ${{ matrix.config.os == 'windows' && '-Db_vscrt=static_from_buildtype' || '' }}
 
       - name: Build and install Libs
         if: matrix.config.os != 'ubuntu'
