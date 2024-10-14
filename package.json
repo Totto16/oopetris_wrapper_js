@@ -17,8 +17,8 @@
 	"scripts": {
 		"install": "node-gyp-build",
 		"build": "npm run build:gyp && npm run compile",
-		"build:gyp": "prebuildify -t 18.20.4 -t 20.17.0 -t 21.7.3 -t 22.9.0 --strip",
-		"build:debug": "prebuildify -t 18.20.4 -t 20.17.0 -t 21.7.3 -t 22.9.0 --debug",
+		"build:gyp": "prebuildify -t 18.20.4 -t 20.18.0 -t 21.7.3 -t 22.9.0 --strip",
+		"build:debug": "prebuildify -t 18.20.4 -t 20.18.0 -t 21.7.3 -t 22.9.0 --debug",
 		"compile": "npm run build:tsc",
 		"build:tsc": "tsc",
 		"test": "npx jest",
