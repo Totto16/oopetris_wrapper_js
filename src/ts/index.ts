@@ -4,7 +4,19 @@ import path from "path"
 const rootDir = path.join(__dirname, "..", "..")
 const oopetris = require("node-gyp-build")(rootDir)
 
-export type AdditionalInformation = Record<string, any>
+export type U64 = number | BigInt
+export type U32 = number
+export type U8 = number
+
+export type AdditionalInformationValue =
+	| string
+	| U8
+	| U32
+	| U64
+	| boolean
+	| AdditionalInformationValue[]
+
+export type AdditionalInformation = Record<string, AdditionalInformationValue>
 
 export type InputEvent =
 	| "RotateLeftPressed"
@@ -24,13 +36,13 @@ export type InputEvent =
 
 export type TetrionRecord = {
 	event: InputEvent
-	simulation_step_index: number
-	tetrion_index: number
+	simulation_step_index: U64
+	tetrion_index: U8
 }
 
 export type MinoPosition = {
-	x: number
-	y: number
+	x: U8
+	y: U8
 }
 
 export type TetrominoType = "I" | "J" | "L" | "O" | "S" | "T" | "Z"
@@ -41,17 +53,17 @@ export type Mino = {
 }
 
 export type TetrionSnapshot = {
-	level: number
-	lines_cleared: number
+	level: U32
+	lines_cleared: U32
 	mino_stack: Mino[]
-	score: number
-	simulation_step_index: number
-	tetrion_index: number
+	score: U64
+	simulation_step_index: U64
+	tetrion_index: U8
 }
 
 export type TetrionHeader = {
-	seed: number
-	starting_level: number
+	seed: U64
+	starting_level: U32
 }
 
 export type RecordingInformation = {
@@ -59,12 +71,12 @@ export type RecordingInformation = {
 	records: TetrionRecord[]
 	snapshots: TetrionSnapshot[]
 	tetrion_headers: TetrionHeader[]
-	version: number
+	version: U8
 }
 
 export type GridProperties = {
-	height: number
-	width: number
+	height: U8
+	width: U8
 }
 
 export type RecordingsProperties = {

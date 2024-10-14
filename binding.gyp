@@ -58,7 +58,7 @@
                 ],
             ],
             "defines": ["V8_DEPRECATION_WARNINGS=1"],
-            "sources": ["src/cpp/wrapper.cpp"],
+            "sources": ["src/cpp/wrapper.cpp", "src/cpp/convert.cpp"],
             "include_dirs": [
                 "<!@(node -e \"require('nan')\")",
                 "<!@(pkg-config oopetris-recordings --cflags-only-I | sed s/-I//g)",
