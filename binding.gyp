@@ -81,7 +81,7 @@
                 "VCLinkerTool": {
                     "AdditionalDependencies": [
                         # adjust to the default setting, namely lib<name>.a via some sed magic
-                        "<!@(pkg-config oopetris-recordings --libs-only-l | sed s/-l/lib/g |sed 's/\\s/.a /g')",
+                        "<!@(pkg-config oopetris-recordings --libs-only-l | sed s/-l/lib/g | sed \"s/\\s/.a /g\")",
                     ],
                 },
             },
