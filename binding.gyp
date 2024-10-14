@@ -66,20 +66,22 @@
             "library_dirs": [
                 "<!@(pkg-config oopetris-recordings --libs-only-L | sed s/-L//g)",
             ],
-            "msvs_settings": {  ## settinsg cflags_cc doesn't really work onw windows, so using this
+            "msvs_settings": {  # setting cflags_cc doesn't really work onw windows, so using this
                 "VCCLCompilerTool": {
                     "AdditionalOptions": [
                         "/std:c++latest",
                         "/W4",
                         "/EHsc",
                         "/O2",
+                        "/utf-8",  # since fmt.h has some warnings without that
                         "/wd4100",  # since nan.h -> node.h has some warnings regarding that
                         "<!@(pkg-config oopetris-recordings --cflags)",
                     ]
                 },
                 "VCLinkerTool": {
                     "AdditionalDependencies": [
-                        "<!@(pkg-config oopetris-recordings --libs-only-l | sed s/-l/lib/g |sed 's/\\s/.a /g')",  # adjust to the default setting, namely lib<name>.a via some sed magic
+                        # adjust to the default setting, namely lib<name>.a via some sed magic
+                        "<!@(pkg-config oopetris-recordings --libs-only-l | sed s/-l/lib/g |sed 's/\\s/.a /g')",
                     ],
                 },
             },
