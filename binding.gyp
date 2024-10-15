@@ -1,5 +1,8 @@
 # type: ignore
 {
+    "variables": {
+        "oopetris_compiler": "<!(pkg-config oopetris-recordings --variable=compiler)",
+    },
     "targets": [
         {
             "target_name": "oopetris",
@@ -38,6 +41,15 @@
                                 "-I/usr/local/include",  # this is and error with magic_enum in mac, but this small hack fixes it :)
                             ]
                         }
+                    },
+                ],
+                [
+                    'OS == "linux" and oopetris_compiler == "gcc"',
+                    {
+                        "cflags_cc": [
+                            "-static-libgcc",  # to build with a static libgcc (libgcc_s)
+                            "-static-libstdc++",  # to build with a static libstdc++
+                        ]
                     },
                 ],
                 [
@@ -81,7 +93,7 @@
                 "VCLinkerTool": {
                     "AdditionalDependencies": [
                         # adjust to the default setting, namely lib<name>.a via some sed magic
-                        "<!@(pkg-config oopetris-recordings --libs-only-l | sed s/-l/lib/g | sed \"s/\\s/.a /g\")",
+                        '<!@(pkg-config oopetris-recordings --libs-only-l | sed s/-l/lib/g | sed "s/\\s/.a /g")',
                     ],
                 },
             },
