@@ -19,6 +19,8 @@
 #include <core/core.hpp>
 #include <recordings/recordings.hpp>
 
+#include "./convert.hpp"
+
 NAN_METHOD(isRecordingFile) {
 
     if (info.Length() != 1) {
@@ -41,12 +43,8 @@ NAN_METHOD(isRecordingFile) {
 
     auto parsed = recorder::RecordingReader::from_path(filePath);
 
-    if (not parsed.has_value()) {
-        info.GetReturnValue().Set(Nan::False());
-        return;
-    }
 
-    info.GetReturnValue().Set(Nan::True());
+    info.GetReturnValue().Set(Nan::New<v8::Boolean>(parsed.has_value()));
     return;
 }
 
@@ -85,31 +83,19 @@ NAN_METHOD(getInformation) {
         return;
     }
 
-    const auto recording_reader = std::move(parsed.value());
+    auto recording_reader = std::move(parsed.value());
 
-    auto json_value = json::try_convert_to_json<recorder::RecordingReader>(recording_reader);
 
-    if (not json_value.has_value()) {
-        std::string error = "An error occurred during converting to json:";
-        error += json_value.error();
-
-        info.GetIsolate()->ThrowException(Nan::Error(Nan::New(error).ToLocalChecked()));
+    v8::Local<v8::Value> val = recording_reader_to_js(info.GetIsolate(), recording_reader);
+    if (val.IsEmpty()) {
+        // normally here we already threw an exception, but for safety, we throw another more generic one
+        info.GetIsolate()->ThrowException(
+                Nan::Error(Nan::New("An error occurred, while converting an internal structure").ToLocalChecked())
+        );
         return;
     }
 
-    const auto result_string_json = json_value->dump(-1, ' ', false);
-
-    v8::Local<v8::String> js_json_string = Nan::New(result_string_json).ToLocalChecked();
-
-    Nan::JSON NanJSON;
-    Nan::MaybeLocal<v8::Value> result = NanJSON.Parse(js_json_string);
-    if (!result.IsEmpty()) {
-        v8::Local<v8::Value> val = result.ToLocalChecked();
-        info.GetReturnValue().Set(val);
-        return;
-    }
-
-    info.GetIsolate()->ThrowException(Nan::Error("Failed to parse internal JSON structure!"));
+    info.GetReturnValue().Set(val);
     return;
 }
 

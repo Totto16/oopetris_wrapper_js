@@ -2,6 +2,7 @@ import { RecordingsUtility } from "../src/ts/index"
 import { expect } from "@jest/globals"
 import path from "path"
 import fs from "fs"
+import { correct } from "./correct"
 
 function fail(reason = "fail was called in a test."): never {
 	throw new Error(reason)
@@ -74,14 +75,7 @@ describe("getInformation: works as expected", () => {
 		const file = getFilePath("correct.rec")
 		expect(fs.existsSync(file)).toBe(true)
 
-		const serializedFile = getFilePath("correct.serialized.json")
-		expect(fs.existsSync(serializedFile)).toBe(true)
-
-		const correctResult = JSON.parse(
-			fs.readFileSync(serializedFile).toString()
-		)
-
 		const result = RecordingsUtility.getInformation(file)
-		expect(result).toMatchObject(correctResult)
+		expect(result).toMatchObject(correct)
 	})
 })
