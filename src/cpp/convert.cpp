@@ -190,9 +190,11 @@ static v8::Local<v8::Value> mino_position_to_js(v8::Isolate* isolate, const grid
 
     v8::Local<v8::Object> result = Nan::New<v8::Object>();
 
-    auto js_x = Nan::New<v8::Uint32>(mino_position.x);
+    auto mino_pos = mino_position.cast<uint8_t>();
 
-    auto js_y = Nan::New<v8::Uint32>(mino_position.y);
+    auto js_x = Nan::New<v8::Uint32>(mino_pos.x);
+
+    auto js_y = Nan::New<v8::Uint32>(mino_pos.y);
 
     std::vector<std::pair<std::string, v8::Local<v8::Value>>> properties_vector{
         { "x", js_x },
