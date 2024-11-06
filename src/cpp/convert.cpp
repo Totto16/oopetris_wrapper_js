@@ -18,7 +18,7 @@ static v8::Local<v8::Value>
 information_value_to_js(v8::Isolate* isolate, const recorder::InformationValue& information_value) {
 
     return std::visit(
-            helper::overloaded{
+            helper::Overloaded{
                     [](const std::string& value) -> v8::Local<v8::Value> {
                         return Nan::New<v8::String>(value).ToLocalChecked();
                     },
