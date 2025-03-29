@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  oopetris_main_repo_ref: 01236ab59b27e7a8889e48c73ec0361cf2206805
+
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -41,7 +44,7 @@ jobs:
         with:
           fetch-depth: '0'
           repository: OpenBrickProtocolFoundation/oopetris
-          ref: main
+          ref: ${{ env.oopetris_main_repo_ref }}
           path: ./oopetris
           submodules: false
 
