@@ -50,7 +50,7 @@ jobs:
         uses: TheMrMilchmann/setup-msvc-dev@v3
         with:
           arch: x64
-          toolset: 14.41
+          toolset: 14.43
 
       - name: Setup GCC (Linux)
         if: matrix.config.os == 'ubuntu'
